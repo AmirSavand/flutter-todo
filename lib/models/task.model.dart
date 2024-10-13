@@ -12,9 +12,10 @@ class Task {
   String title;
 
   /// A flag indicating whether the task is completed or not.
-  bool done = false;
+  bool done;
 
   Task({
     required this.title,
+    this.done = false,
   });
 }
