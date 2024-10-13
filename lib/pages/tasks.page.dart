@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/models/task.model.dart';
+import 'package:flutter_todo/shared/footer.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
@@ -75,6 +76,9 @@ class _TasksPageState extends State<TasksPage> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: const Footer(
+        selectedIndex: 0,
       ),
     );
   }

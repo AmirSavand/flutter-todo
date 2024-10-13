@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/models/note.model.dart';
 import 'package:intl/intl.dart';
 
+import '../shared/footer.dart';
+
 class NotesPage extends StatefulWidget {
   const NotesPage({super.key});
 
@@ -110,6 +112,9 @@ class _NotesPageState extends State<NotesPage> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: const Footer(
+        selectedIndex: 1,
       ),
     );
   }

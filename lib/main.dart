@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(useMaterial3: true),
       themeMode: ThemeMode.system,
       routes: {
-        '/': (context) => const NotesPage(),
-        '/notes': (context) => const TasksPage(),
+        '/': (context) => const TasksPage(),
+        '/notes': (context) => const NotesPage(),
       },
     );
   }
