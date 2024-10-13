@@ -19,6 +19,8 @@ class _TasksPageState extends State<TasksPage> {
     Task(title: 'Add task create modal'),
   ];
 
+  final TextEditingController _taskInputController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +66,23 @@ class _TasksPageState extends State<TasksPage> {
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: TextField(
+              controller: _taskInputController,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.task_alt),
+                border: OutlineInputBorder(),
+                hintText: 'Create a new task',
+              ),
+              onSubmitted: (String value) {
+                _taskInputController.clear();
+                setState(() {
+                  _tasks.add(Task(title: value));
+                });
+              },
+            ),
+          )
         ],
       ),
     );
