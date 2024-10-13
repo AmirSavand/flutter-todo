@@ -34,9 +34,8 @@ class _TasksPageState extends State<TasksPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(padding: EdgeInsets.all(16)),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.all(16),
             child: Text(
               'Todos',
               style: TextStyle(fontWeight: FontWeight.bold),
