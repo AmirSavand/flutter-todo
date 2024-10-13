@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/pages/notes.page.dart';
 import 'package:flutter_todo/pages/tasks.page.dart';
 
 void main() {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(useMaterial3: true),
       themeMode: ThemeMode.system,
       routes: {
-        '/': (context) => const TasksPage(),
+        '/': (context) => const NotesPage(),
+        '/notes': (context) => const TasksPage(),
       },
     );
   }

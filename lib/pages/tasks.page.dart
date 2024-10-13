@@ -25,22 +25,11 @@ class _TasksPageState extends State<TasksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(
-          'Flutter Todo',
-          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-        ),
+        title: const Text('Flutter Todo'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(16),
-            child: Text(
-              'Todos',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
           Expanded(
             child: ListView.builder(
               itemCount: _tasks.length,
@@ -84,7 +73,7 @@ class _TasksPageState extends State<TasksPage> {
                 });
               },
             ),
-          )
+          ),
         ],
       ),
     );
