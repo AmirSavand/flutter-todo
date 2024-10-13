@@ -26,7 +26,10 @@ class _TasksPageState extends State<TasksPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text('Flutter Todo'),
+        title: Text(
+          'Flutter Todo',
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
