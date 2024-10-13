@@ -89,4 +89,10 @@ class _TasksPageState extends State<TasksPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _taskInputController.dispose();
+  }
 }
