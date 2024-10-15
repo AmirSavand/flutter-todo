@@ -9,6 +9,9 @@ class Store<T> {
   /// List of in-memory items for lazy initialization.
   List<T>? _items;
 
+  /// List of initial items in case storage is setup first time.
+  List<T>? initialItems;
+
   /// Lazy get the preference instance.
   Future<SharedPreferences> get preference async {
     return _preference ??= await SharedPreferences.getInstance();
@@ -24,8 +27,15 @@ class Store<T> {
     final prefs = await preference;
     List<String> list;
     try {
+      List<String>? listRaw = prefs.getStringList(key);
+      if (listRaw == null) {
+        return Future.value(initialItems);
+      }
       list = prefs.getStringList(key) ?? [];
     } catch (error) {
+      if (initialItems != null) {
+        return Future.value(initialItems);
+      }
       list = [];
     }
     return list.map((String item) => fromJson(jsonDecode(item))).toList();
@@ -46,7 +56,7 @@ class Store<T> {
     if (_items == null) {
       return Future.value();
     }
-    _items!.add(task);
+    _items!.insert(0, task);
     await save();
   }
 
@@ -69,5 +79,6 @@ class Store<T> {
     required this.key,
     required this.toJson,
     required this.fromJson,
+    this.initialItems,
   });
 }

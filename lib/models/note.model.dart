@@ -9,6 +9,9 @@ class Note {
     key: 'notes',
     toJson: (Note item) => item.toJson(),
     fromJson: (Map<String, dynamic> item) => Note.fromJson(item),
+    initialItems: [
+      Note.create(content: 'Welcome to the app.\nKeep your notes here.'),
+    ],
   );
 
   /// UUID instance reference.

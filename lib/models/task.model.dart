@@ -9,6 +9,13 @@ class Task {
     key: 'tasks',
     toJson: (Task item) => item.toJson(),
     fromJson: (Map<String, dynamic> item) => Task.fromJson(item),
+    initialItems: [
+      Task.create(title: 'Use this awesome app', done: true),
+      Task.create(title: 'Read this example todo'),
+      Task.create(title: 'Mark this one as well'),
+      Task.create(title: 'Use the bottom input to add new ones'),
+      Task.create(title: 'Take a look at other pages'),
+    ],
   );
 
   /// UUID instance reference.
@@ -53,12 +60,12 @@ class Task {
     );
   }
 
-  static create({required String title}) {
+  static create({required String title, bool done = false}) {
     return Task._(
       id: _uuid.v4(),
       title: title,
       created: DateTime.now(),
-      done: false,
+      done: done,
     );
   }
 }
