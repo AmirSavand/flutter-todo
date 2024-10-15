@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/models/note.model.dart';
 import 'package:intl/intl.dart';
 
-import '../shared/footer.dart';
-
 class NotesPage extends StatefulWidget {
   const NotesPage({super.key});
 
@@ -50,12 +48,10 @@ class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Todo'),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Padding(padding: EdgeInsets.only(top: 16)),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -112,9 +108,6 @@ class _NotesPageState extends State<NotesPage> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: const Footer(
-        selectedIndex: 1,
       ),
     );
   }

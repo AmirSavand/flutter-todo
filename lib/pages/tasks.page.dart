@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/models/task.model.dart';
-import 'package:flutter_todo/shared/footer.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
@@ -25,18 +24,10 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Flutter Todo',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Padding(padding: EdgeInsets.only(top: 16)),
           Expanded(
             child: ListView.builder(
               itemCount: _tasks.length,
@@ -82,9 +73,6 @@ class _TasksPageState extends State<TasksPage> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: const Footer(
-        selectedIndex: 0,
       ),
     );
   }
