@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/pages/notes.page.dart';
+import 'package:flutter_todo/pages/settings.page.dart';
 import 'package:flutter_todo/pages/tasks.page.dart';
 import 'package:flutter_todo/pages/wrapper.page.dart';
 import 'package:flutter_todo/transitions/slide-fade-up.transition.dart';
@@ -32,6 +33,14 @@ class MyApp extends StatelessWidget {
             pageBuilder: (context, state) => CustomTransitionPage(
               key: state.pageKey,
               child: const NotesPage(),
+              transitionsBuilder: slideFadeUpTransition,
+            ),
+          ),
+          GoRoute(
+            path: '/settings',
+            pageBuilder: (context, state) => CustomTransitionPage(
+              key: state.pageKey,
+              child: const SettingsPage(),
               transitionsBuilder: slideFadeUpTransition,
             ),
           ),

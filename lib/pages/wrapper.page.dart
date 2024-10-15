@@ -11,21 +11,24 @@ class WrapperPage extends StatefulWidget {
 }
 
 class _WrapperPageState extends State<WrapperPage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
-  // A list of navigation destinations and their associated routes.
   final List<_NavigationItem> _navigationItems = const [
+    _NavigationItem(
+      route: '/notes',
+      icon: Icons.notes,
+      label: 'Notes',
+    ),
     _NavigationItem(
       route: '/',
       icon: Icons.task_alt,
       label: 'Tasks',
     ),
     _NavigationItem(
-      route: '/notes',
-      icon: Icons.notes,
-      label: 'Notes',
+      route: '/settings',
+      icon: Icons.settings,
+      label: 'Settings',
     ),
-    // You can add more items here if needed
   ];
 
   void _onDestinationSelected(int index) {

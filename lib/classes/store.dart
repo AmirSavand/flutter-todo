@@ -28,9 +28,7 @@ class Store<T> {
     } catch (error) {
       list = [];
     }
-    return list.map((String item) {
-      return fromJson(jsonDecode(item));
-    }).toList();
+    return list.map((String item) => fromJson(jsonDecode(item))).toList();
   }
 
   /// Save a list of items to shared preferences.
