@@ -26,7 +26,13 @@ class _TasksPageState extends State<TasksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Todo'),
+        title: Text(
+          'Flutter Todo',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
