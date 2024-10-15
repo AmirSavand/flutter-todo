@@ -10,40 +10,19 @@ class NotesPage extends StatefulWidget {
 }
 
 class _NotesPageState extends State<NotesPage> {
-  final List<Note> _notes = [
-    Note(
-      content: "It was hidden under the log beside the stream. "
-          "It had been there for as long as Jerry had been alive. "
-          "He wasn't sure if anyone besides him and his friends knew "
-          "of its existence.\n\nHe knew that anyone could potentially "
-          "find it, but it was well enough hidden that it seemed unlikely "
-          "to happen. The fact that it had been there for more than 30 "
-          "years attested to this. So it was quite a surprise when he "
-          "found the item was missing.",
-    ),
-    Note(
-      content: "It was hidden under the log beside the stream. "
-          "It had been there for as long as Jerry had been alive. "
-          "He wasn't sure if anyone besides him and his friends knew "
-          "of its existence.\n\nHe knew that anyone could potentially "
-          "find it, but it was well enough hidden that it seemed unlikely "
-          "to happen. The fact that it had been there for more than 30 "
-          "years attested to this. So it was quite a surprise when he "
-          "found the item was missing.",
-    ),
-    Note(
-      content: "It was hidden under the log beside the stream.\n\n"
-          "It had been there for as long as Jerry had been alive. "
-          "He wasn't sure if anyone besides him and his friends knew "
-          "of its existence. He knew that anyone could potentially "
-          "find it, but it was well enough hidden that it seemed unlikely "
-          "to happen.\n\n The fact that it had been there for more than 30 "
-          "years attested to this. So it was quite a surprise when he "
-          "found the item was missing.",
-    ),
-  ];
+  late List<Note> _notes = [];
 
   final TextEditingController _taskInputController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Note.store.items.then((List<Note> value) {
+      setState(() {
+        _notes = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +76,8 @@ class _NotesPageState extends State<NotesPage> {
                       final String text = _taskInputController.text;
                       _taskInputController.clear();
                       setState(() {
-                        _notes.add(Note(content: text));
+                        Note newNote = Note.create(content: text);
+                        Note.store.add(newNote);
                       });
                     },
                     icon: const Icon(Icons.check),

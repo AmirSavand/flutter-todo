@@ -9,17 +9,19 @@ class TasksPage extends StatefulWidget {
 }
 
 class _TasksPageState extends State<TasksPage> {
-  final List<Task> _tasks = [
-    Task(title: 'Learn Flutter immediately'),
-    Task(title: 'Use ChatGPT and Google for resources'),
-    Task(title: 'Create task list page'),
-    Task(title: 'Create task detail page'),
-    Task(title: 'Save tasks to storage', done: true),
-    Task(title: 'Load tasks from storage', done: true),
-    Task(title: 'Add task create modal'),
-  ];
+  late List<Task> _tasks = [];
 
   final TextEditingController _taskInputController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Task.store.items.then((List<Task> value) {
+      setState(() {
+        _tasks = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,10 @@ class _TasksPageState extends State<TasksPage> {
                       task.done ? Icons.task_alt : Icons.circle_outlined,
                     ),
                     onPressed: () {
-                      setState(() => task.done = !task.done);
+                      setState(() {
+                        task.done = !task.done;
+                      });
+                      Task.store.save();
                     },
                   ),
                   title: Text(
@@ -67,7 +72,8 @@ class _TasksPageState extends State<TasksPage> {
               onSubmitted: (String value) {
                 _taskInputController.clear();
                 setState(() {
-                  _tasks.add(Task(title: value));
+                  Task newTask = Task.create(title: value);
+                  Task.store.add(newTask);
                 });
               },
             ),
