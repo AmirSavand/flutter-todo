@@ -20,34 +20,25 @@ class MyApp extends StatelessWidget {
           return WrapperPage(child: child);
         },
         routes: [
-          GoRoute(
-            path: '/',
-            pageBuilder: (context, state) => CustomTransitionPage(
-              key: state.pageKey,
-              child: const TasksPage(),
-              transitionsBuilder: slideFadeUpTransition,
-            ),
-          ),
-          GoRoute(
-            path: '/notes',
-            pageBuilder: (context, state) => CustomTransitionPage(
-              key: state.pageKey,
-              child: const NotesPage(),
-              transitionsBuilder: slideFadeUpTransition,
-            ),
-          ),
-          GoRoute(
-            path: '/settings',
-            pageBuilder: (context, state) => CustomTransitionPage(
-              key: state.pageKey,
-              child: const SettingsPage(),
-              transitionsBuilder: slideFadeUpTransition,
-            ),
-          ),
+          _createRoute('/', const TasksPage()),
+          _createRoute('/notes', const NotesPage()),
+          _createRoute('/settings', const SettingsPage()),
         ],
       ),
     ],
   );
+
+  /// Go route instance creator to avoid repetition.
+  static GoRoute _createRoute(String path, Widget child) {
+    return GoRoute(
+      path: path,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: child,
+        transitionsBuilder: slideFadeUpTransition,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
