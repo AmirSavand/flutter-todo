@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/models/task.model.dart';
+import 'package:go_router/go_router.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
@@ -37,9 +38,7 @@ class _TasksPageState extends State<TasksPage> {
                 final task = _tasks[index];
                 return ListTile(
                   leading: IconButton(
-                    icon: Icon(
-                      task.done ? Icons.task_alt : Icons.circle_outlined,
-                    ),
+                    icon: Icon(task.icon),
                     onPressed: () {
                       setState(() {
                         task.done = !task.done;
@@ -56,6 +55,12 @@ class _TasksPageState extends State<TasksPage> {
                           : null,
                     ),
                   ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.chevron_right),
+                    onPressed: () {
+                      context.go('/task/${task.id}');
+                    },
+                  ),
                 );
               },
             ),
@@ -65,7 +70,6 @@ class _TasksPageState extends State<TasksPage> {
             child: TextField(
               controller: _taskInputController,
               decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.task_alt),
                 border: OutlineInputBorder(),
                 hintText: 'Create a new task',
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/pages/notes.page.dart';
 import 'package:flutter_todo/pages/settings.page.dart';
+import 'package:flutter_todo/pages/task.page.dart';
 import 'package:flutter_todo/pages/tasks.page.dart';
 import 'package:flutter_todo/pages/wrapper.page.dart';
 import 'package:flutter_todo/transitions/slide-fade-up.transition.dart';
@@ -20,21 +21,44 @@ class MyApp extends StatelessWidget {
           return WrapperPage(child: child);
         },
         routes: [
-          _createRoute('/', const TasksPage()),
-          _createRoute('/notes', const NotesPage()),
-          _createRoute('/settings', const SettingsPage()),
+          _createRoute('tasks', '/', const TasksPage()),
+          _createRouteWithId('task', '/task/:id', (id) => TaskPage(id: id)),
+          _createRoute('notes', '/notes', const NotesPage()),
+          _createRoute('settings', '/settings', const SettingsPage()),
         ],
       ),
     ],
   );
 
   /// Go route instance creator to avoid repetition.
-  static GoRoute _createRoute(String path, Widget child) {
+  static GoRoute _createRoute(
+    String name,
+    String path,
+    Widget child,
+  ) {
     return GoRoute(
+      name: name,
       path: path,
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child: child,
+        transitionsBuilder: slideFadeUpTransition,
+      ),
+    );
+  }
+
+  // Same as _createRoute but for routes with ID.
+  static GoRoute _createRouteWithId(
+    String name,
+    String path,
+    Widget Function(String id) getWidget,
+  ) {
+    return GoRoute(
+      name: name,
+      path: path,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: getWidget(state.pathParameters['id'].toString()),
         transitionsBuilder: slideFadeUpTransition,
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import '../classes/store.dart';
@@ -60,6 +61,10 @@ class Task {
     );
   }
 
+  /// Get the icon representing this task (done status).
+  IconData get icon => done ? Icons.task_alt : Icons.circle_outlined;
+
+  /// Create and return a new task instance.
   static create({required String title, bool done = false}) {
     return Task._(
       id: _uuid.v4(),

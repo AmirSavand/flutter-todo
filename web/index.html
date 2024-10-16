@@ -23,6 +23,10 @@
 <!--suppress HtmlUnknownTarget -->
 <script async src="flutter_bootstrap.js"></script>
 <!-- In web, always go to root initially. -->
-<script>if (location.hash) { location.hash = '' }</script>
+<script>
+  if (!location.origin.includes('localhost') && location.hash) {
+    location.hash = '';
+  }
+</script>
 </body>
 </html>

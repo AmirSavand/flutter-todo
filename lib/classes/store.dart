@@ -60,6 +60,19 @@ class Store<T> {
     await save();
   }
 
+  /// Remove an item from the list.
+  /// Returns true if item was successfully found and removed.
+  Future<bool> remove(T item) async {
+    List<T> list = await items;
+    int index = list.indexOf(item);
+    if (index != -1) {
+      list.removeAt(index);
+      await save();
+      return Future.value(true);
+    }
+    return Future.value(false);
+  }
+
   /// Clear all stored data.
   Future<void> clear() async {
     final prefs = await preference;
