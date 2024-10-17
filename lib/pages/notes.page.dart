@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/models/note.model.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_todo/models/models.dart';
+import 'package:go_router/go_router.dart';
 
 class NotesPage extends StatefulWidget {
   const NotesPage({super.key});
@@ -14,14 +14,22 @@ class _NotesPageState extends State<NotesPage> {
 
   final TextEditingController _taskInputController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
+  void _setup() {
     Note.store.items.then((List<Note> value) {
       setState(() {
         _notes = value;
       });
     });
+  }
+
+  void _unFocusInput() {
+    FocusScope.of(context).unfocus();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setup();
   }
 
   @override
@@ -30,34 +38,30 @@ class _NotesPageState extends State<NotesPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(padding: EdgeInsets.only(top: 16)),
+          const Padding(padding: EdgeInsets.only(top: 8)),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ListView.builder(
-                itemCount: _notes.length,
-                itemBuilder: (context, index) {
-                  final note = _notes[index];
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(note.content),
-                          const SizedBox(height: 16),
-                          Text(
-                            DateFormat.yMd().add_jm().format(note.created),
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.tertiary,
-                            ),
-                          ),
-                        ],
-                      ),
+            child: ListView.builder(
+              itemCount: _notes.length,
+              itemBuilder: (context, index) {
+                final note = _notes[index];
+                return Card(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(16),
+                    title: Text(note.shortContent),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  );
-                },
-              ),
+                    onTap: () async {
+                      await context.push('/note/${note.id}');
+                      _setup();
+                    },
+                  ),
+                );
+              },
             ),
           ),
           Padding(
@@ -66,6 +70,7 @@ class _NotesPageState extends State<NotesPage> {
               minLines: 2,
               maxLines: 5,
               controller: _taskInputController,
+              onTapOutside: (_) => _unFocusInput(),
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 hintText: 'Write a note',
@@ -75,6 +80,7 @@ class _NotesPageState extends State<NotesPage> {
                     onPressed: () {
                       final String text = _taskInputController.text;
                       _taskInputController.clear();
+                      _unFocusInput();
                       setState(() {
                         Note newNote = Note.create(content: text);
                         Note.store.add(newNote);

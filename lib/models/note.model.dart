@@ -4,6 +4,9 @@ import '../classes/store.dart';
 
 /// A class representing a Note.
 class Note {
+  /// Maximum number of characters for short content.
+  static const maxShortContent = 150;
+
   /// Store instance to manage notes.
   static final store = Store<Note>(
     key: 'notes',
@@ -23,8 +26,16 @@ class Note {
   /// The date and time when the note was created.
   final DateTime created;
 
-  /// The content or name of the note.
+  /// The content of the note.
   String content;
+
+  /// Short version of the content of the note.
+  String get shortContent {
+    if (content.length <= maxShortContent) {
+      return content;
+    }
+    return '${content.substring(0, maxShortContent)}...';
+  }
 
   Note._({
     required this.id,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/models/task.model.dart';
+import 'package:flutter_todo/models/models.dart';
 import 'package:go_router/go_router.dart';
 
 class TasksPage extends StatefulWidget {
@@ -14,14 +14,22 @@ class _TasksPageState extends State<TasksPage> {
 
   final TextEditingController _taskInputController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
+  void _setup() {
     Task.store.items.then((List<Task> value) {
       setState(() {
         _tasks = value;
       });
     });
+  }
+
+  void _unFocusInput() {
+    FocusScope.of(context).unfocus();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setup();
   }
 
   @override
@@ -57,8 +65,9 @@ class _TasksPageState extends State<TasksPage> {
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.chevron_right),
-                    onPressed: () {
-                      context.go('/task/${task.id}');
+                    onPressed: () async {
+                      await context.push('/task/${task.id}');
+                      _setup();
                     },
                   ),
                 );
@@ -73,8 +82,10 @@ class _TasksPageState extends State<TasksPage> {
                 border: OutlineInputBorder(),
                 hintText: 'Create a new task',
               ),
+              onTapOutside: (_) => _unFocusInput(),
               onSubmitted: (String value) {
                 _taskInputController.clear();
+                _unFocusInput();
                 setState(() {
                   Task newTask = Task.create(title: value);
                   Task.store.add(newTask);

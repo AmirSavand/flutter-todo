@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/pages/notes.page.dart';
-import 'package:flutter_todo/pages/settings.page.dart';
-import 'package:flutter_todo/pages/task.page.dart';
-import 'package:flutter_todo/pages/tasks.page.dart';
-import 'package:flutter_todo/pages/wrapper.page.dart';
-import 'package:flutter_todo/transitions/slide-fade-up.transition.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_todo/pages/pages.dart';
+import 'package:flutter_todo/transitions/transitions.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
@@ -24,6 +21,7 @@ class MyApp extends StatelessWidget {
           _createRoute('tasks', '/', const TasksPage()),
           _createRouteWithId('task', '/task/:id', (id) => TaskPage(id: id)),
           _createRoute('notes', '/notes', const NotesPage()),
+          _createRouteWithId('note', '/note/:id', (id) => NotePage(id: id)),
           _createRoute('settings', '/settings', const SettingsPage()),
         ],
       ),
@@ -66,6 +64,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
+    ));
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Todo',

@@ -7,11 +7,11 @@ Widget slideFadeUpTransition(
   Widget child,
 ) {
   // Start position (off-screen bottom)
-  const Offset begin = Offset(0.0, 0.1);
+  const Offset begin = Offset(0, 0.1);
   // End position (final position)
   const Offset end = Offset.zero;
   // Easing curve for the animation
-  const Curve curve = Curves.ease;
+  const Curve curve = Curves.easeInOut;
   // Tween to animate from the beginning to the end position
   final Tween<Offset> slideTween = Tween(begin: begin, end: end);
   // Curved animation applying the defined curve
@@ -20,7 +20,7 @@ Widget slideFadeUpTransition(
     curve: curve,
   );
   // Tween for the opacity from a to b
-  final Tween<double> opacityTween = Tween(begin: 0.5, end: 1.0);
+  final Tween<double> opacityTween = Tween(begin: 0, end: 1);
   // Animate the opacity using the same curved animation
   final Animation<double> opacityAnimation = opacityTween.animate(
     curvedAnimation,

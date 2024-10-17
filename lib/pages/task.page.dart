@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/widgets/loading.widget.dart';
+import 'package:flutter_todo/models/models.dart';
+import 'package:flutter_todo/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-
-import '../models/task.model.dart';
-import '../widgets/not-found.widget.dart';
 
 class TaskPage extends StatefulWidget {
   const TaskPage({super.key, required this.id});
@@ -45,43 +43,46 @@ class _TaskPageState extends State<TaskPage> {
     }
     Task task = _task!;
     return Scaffold(
-      body: Card(
-        margin: const EdgeInsets.all(16),
-        child: ListTile(
-          title: Text(
-            task.title,
-            style: TextStyle(
-              decoration: task.done ? TextDecoration.lineThrough : null,
+      body: SingleChildScrollView(
+        padding: notificationBarPadding(context),
+        child: Card(
+          margin: const EdgeInsets.all(16),
+          child: ListTile(
+            contentPadding: const EdgeInsets.all(16),
+            title: Text(
+              task.title,
+              style: TextStyle(
+                decoration: task.done ? TextDecoration.lineThrough : null,
+              ),
             ),
-          ),
-          subtitle: Text(
-            'Created at ${DateFormat.yMd().add_jm().format(task.created)}',
-          ),
-          leading: IconButton(
-            icon: Icon(task.icon),
-            onPressed: () {
-              setState(() {
-                task.done = !task.done;
-              });
-              Task.store.save();
-            },
-          ),
-          trailing: IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () async {
-              // Remove the task
-              await Task.store.remove(task);
-              setState(() {
-                // Make a snackbar about it
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Your todo is now gone'),
-                  duration: Duration(seconds: 3),
-                ));
-                // Go to task list
-                context.goNamed('tasks');
-              });
-            },
+            subtitle: Text(
+              'Created at ${DateFormat.yMd().add_jm().format(task.created)}',
+            ),
+            leading: IconButton(
+              icon: Icon(task.icon),
+              onPressed: () {
+                setState(() {
+                  task.done = !task.done;
+                });
+                Task.store.save();
+              },
+            ),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () async {
+                // Remove the task
+                await Task.store.remove(task);
+                setState(() {
+                  // Make a snackbar about it
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Your todo is now gone'),
+                    duration: Duration(seconds: 3),
+                  ));
+                  // Go back
+                  context.pop();
+                });
+              },
+            ),
           ),
         ),
       ),

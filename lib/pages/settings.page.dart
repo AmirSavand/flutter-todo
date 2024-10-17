@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -9,6 +10,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final Uri _homepage = Uri.parse('https://savandbros.com/flutter-todo');
+
   String _version = 'Loading...';
 
   @override
@@ -27,7 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             child: Column(
               children: [
                 const ListTile(
@@ -37,7 +40,16 @@ class _SettingsPageState extends State<SettingsPage> {
                 ListTile(
                   title: const Text('App Version'),
                   subtitle: Text(_version),
-                )
+                ),
+                ListTile(
+                  title: const Text('About'),
+                  subtitle: const Text('Tap for homepage'),
+                  onTap: () async {
+                    if (await canLaunchUrl(_homepage)) {
+                      launchUrl(_homepage);
+                    }
+                  },
+                ),
               ],
             ),
           ),
